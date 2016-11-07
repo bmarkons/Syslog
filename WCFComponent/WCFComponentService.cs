@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Contracts;
 namespace WCFComponent
 {
-    public abstract class WCFComponentService : IPayments
+    public class WCFComponentService : IPayments
     {
         public bool Payment1()
         {
@@ -19,7 +19,5 @@ namespace WCFComponent
             Console.WriteLine("Payment2 executed.");
             return true;
         }
-
-        protected abstract void Log(string userName, string serviceName);
     }
 }

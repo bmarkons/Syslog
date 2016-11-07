@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WCFComponent
+namespace Contracts
 {
-    public class WCFComponentService1 : WCFComponentService
+    public class TextLogger : ILogger
     {
-        protected override void Log(string userName, string serviceName)
+        public void Log()
         {
             throw new NotImplementedException();
         }

@@ -12,12 +12,13 @@ namespace User
         static void Main(string[] args)
         {
             NetTcpBinding binding = new NetTcpBinding();
-            string address = "net.tcp://localhost:9999/WCFComponent";
+            string address = "net.tcp://localhost:9998/WCFComponent";
 
             using (UserProxy proxy = new UserProxy(binding, new EndpointAddress(new Uri(address))))
             {
                 proxy.Payment1();
                 proxy.Payment2();
+                // TODO: 
             }
 
             Console.ReadLine();
