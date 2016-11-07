@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}</ProjectGuid>
+    <ProjectGuid>{4BC6CF17-7FA6-48FD-9B88-B46C4204A69C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Security</RootNamespace>
-    <AssemblyName>Security</AssemblyName>
+    <RootNamespace>LoggingManager</RootNamespace>
+    <AssemblyName>LoggingManager</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,8 +32,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IdentityModel" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,27 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomAuthorizationManager.cs" />
-    <Compile Include="CustomAuthorizationPolicy.cs" />
-    <Compile Include="CustomPrincipal.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RolesConfig.cs" />
-    <Compile Include="RolesConfigFile.Designer.cs">
+    <Compile Include="Audit.cs" />
+    <Compile Include="AuditEvents.cs" />
+    <Compile Include="AuditEventsFile.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RolesConfigFile.resx</DependentUpon>
+      <DependentUpon>AuditEventsFile.resx</DependentUpon>
     </Compile>
+    <Compile Include="ILogger.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextLogger.cs" />
+    <Compile Include="WindowsEventLogger.cs" />
+    <Compile Include="XMLLogger.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LoggingManager\LoggingManager.csproj">
-      <Project>{4BC6CF17-7FA6-48FD-9B88-B46C4204A69C}</Project>
-      <Name>LoggingManager</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="RolesConfigFile.resx">
+    <EmbeddedResource Include="AuditEventsFile.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>RolesConfigFile.Designer.cs</LastGenOutput>
+      <LastGenOutput>AuditEventsFile.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

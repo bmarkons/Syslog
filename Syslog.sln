@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "User\User.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFComponent", "WCFComponent\WCFComponent.csproj", "{286E3A02-5BB6-4A12-81FE-95631DE5EC51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingManager", "LoggingManager\LoggingManager.csproj", "{4BC6CF17-7FA6-48FD-9B88-B46C4204A69C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Security\Security.csproj", "{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{286E3A02-5BB6-4A12-81FE-95631DE5EC51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{286E3A02-5BB6-4A12-81FE-95631DE5EC51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{286E3A02-5BB6-4A12-81FE-95631DE5EC51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BC6CF17-7FA6-48FD-9B88-B46C4204A69C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BC6CF17-7FA6-48FD-9B88-B46C4204A69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BC6CF17-7FA6-48FD-9B88-B46C4204A69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BC6CF17-7FA6-48FD-9B88-B46C4204A69C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

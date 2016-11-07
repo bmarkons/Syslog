@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,10 +47,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WCFComponentService1.cs" />
     <Compile Include="WCFComponentService.cs" />
-    <Compile Include="WCFComponentService2.cs" />
-    <Compile Include="WCFComponentService3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -58,6 +56,14 @@
     <ProjectReference Include="..\Contracts\Contracts.csproj">
       <Project>{9b9a71ca-deee-418f-abfd-fe7112090d6b}</Project>
       <Name>Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LoggingManager\LoggingManager.csproj">
+      <Project>{4BC6CF17-7FA6-48FD-9B88-B46C4204A69C}</Project>
+      <Name>LoggingManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Security\Security.csproj">
+      <Project>{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}</Project>
+      <Name>Security</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
