@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace LoggingManager
 {
-	public class WindowsEventLogger : ILogger
+	public class WindowsEventLogger : Logger
 	{
-		public void AuthenticationSuccess(string userName)
+		public override void AuthenticationSuccess(string userName)
 		{
 			try
 			{
@@ -17,10 +18,10 @@ namespace LoggingManager
 			}
 
 			string msg = String.Format(AuditEvents.UserAuthenticationSuccess, userName);
-			Console.WriteLine("[WindowsEventLogger]: " + msg);
-		}
+            Log(msg);
+        }
 
-		public void AuthorizationFailed(string userName, string serviceName, string reason)
+        public override void AuthorizationFailed(string userName, string serviceName, string reason)
 		{
 			try
 			{
@@ -31,10 +32,10 @@ namespace LoggingManager
 				//Console.WriteLine(e);
 			}
 			string msg = String.Format(AuditEvents.UserAuthorizationFailed, userName, serviceName, reason);
-			Console.WriteLine("[WindowsEventLogger]: " + msg);
-		}
+            Log(msg);
+        }
 
-		public void AuthorizationSuccess(string userName, string serviceName)
+        public override void AuthorizationSuccess(string userName, string serviceName)
 		{
 			try
 			{
@@ -45,7 +46,14 @@ namespace LoggingManager
 				//Console.WriteLine(e);
 			}
 			string msg = String.Format(AuditEvents.UserAuthorizationSuccess, userName, serviceName);
-			Console.WriteLine("[WindowsEventLogger]: " + msg);
+			Log(msg);
 		}
+
+        protected override void Log(string logMessage)
+        {
+            string timestamp = DateTime.Now.ToString();
+            
+            AddToLogList(4, 1, timestamp, Process.GetCurrentProcess().Id, Environment.MachineName, logMessage);
+        }
 	}
 }

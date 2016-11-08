@@ -14,21 +14,24 @@ namespace WCFComponent
 {
 	class Program
 	{
-		static void Main(string[] args)
+        private static readonly string XML_FILENAME = "logs.xml";
+        private static readonly string TEXT_FILENAME = "logs.txt";
+
+        static void Main(string[] args)
 		{
 			NetTcpBinding binding = new NetTcpBinding();
 			string address1 = "net.tcp://localhost:9997/WCFComponent";
 			string address2 = "net.tcp://localhost:9998/WCFComponent";
 			string address3 = "net.tcp://localhost:9999/WCFComponent";
-			TextLogger textLogger = new TextLogger();
+
+			TextLogger textLogger = new TextLogger(TEXT_FILENAME);
 			WindowsEventLogger windowsEventLogger = new WindowsEventLogger();
-			XMLLogger xmlLogger = new XMLLogger();
+			XMLLogger xmlLogger = new XMLLogger(XML_FILENAME);
 
 			//create hosts
 			ServiceHost host1 = new ServiceHost(typeof(WCFComponentService));
 			ServiceHost host2 = new ServiceHost(typeof(WCFComponentService));
 			ServiceHost host3 = new ServiceHost(typeof(WCFComponentService));
-
 
 			host1.AddServiceEndpoint(typeof(IPayments), binding, address1);
 			host2.AddServiceEndpoint(typeof(IPayments), binding, address2);
@@ -71,7 +74,7 @@ namespace WCFComponent
 
 		}
 
-		private static void SetupAuthorizationPolicy(ServiceHost host, ILogger textLogger)
+		private static void SetupAuthorizationPolicy(ServiceHost host, Logger textLogger)
 		{
 			List<IAuthorizationPolicy> policies = new List<IAuthorizationPolicy>();
 			policies.Add(new CustomAuthorizationPolicy(textLogger));

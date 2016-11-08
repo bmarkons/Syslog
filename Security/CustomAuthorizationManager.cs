@@ -11,9 +11,9 @@ namespace Security
 {
 	public class CustomAuthorizationManager : ServiceAuthorizationManager
 	{
-		private ILogger logger;
+		private Logger logger;
 
-		public CustomAuthorizationManager(ILogger logger)
+		public CustomAuthorizationManager(Logger logger)
 		{
 			this.logger = logger;
 		}

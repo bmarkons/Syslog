@@ -47,7 +47,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AuditEventsFile.resx</DependentUpon>
     </Compile>
-    <Compile Include="ILogger.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextLogger.cs" />
     <Compile Include="WindowsEventLogger.cs" />
@@ -58,6 +58,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AuditEventsFile.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts\Contracts.csproj">
+      <Project>{9b9a71ca-deee-418f-abfd-fe7112090d6b}</Project>
+      <Name>Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -27,11 +27,12 @@ namespace User
 					proxy.Payment2();
 				}
 
-				Console.ReadLine();
 			}
-		}
+            Console.ReadLine();
 
-		private static int GetPort()
+        }
+
+        private static int GetPort()
 		{
 			do
 			{

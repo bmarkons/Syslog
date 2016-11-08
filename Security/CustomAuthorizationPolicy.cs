@@ -12,11 +12,11 @@ namespace Security
 {
 	public class CustomAuthorizationPolicy: IAuthorizationPolicy
 	{
-		private ILogger logger;
+		private Logger logger;
 		private string id;
 		private object locker = new object();
 
-		public CustomAuthorizationPolicy(ILogger logger)
+		public CustomAuthorizationPolicy(Logger logger)
 		{
 			this.logger = logger;
 			this.id = Guid.NewGuid().ToString();
