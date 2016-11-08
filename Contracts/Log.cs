@@ -22,101 +22,28 @@ namespace Contracts
     [DataContract]
     public class Log
     {
-        private int facilityCode;
-        private int severityLevel;
-        private int processId;
-        private string timestamp;
-        private string hostname;
-        private string message;
+        [DataMember]
+        public int FacilityCode { get; set; }
 
         [DataMember]
-        public int FacilityCode
+        public int SeverityLevel { get; set; }
+
+		[DataMember]
+        public int ProcessId { get; set; }
+
+		[DataMember]
+        public string Timestamp { get; set; }
+
+		[DataMember]
+        public string Hostname { get; set; }
+
+		[DataMember]
+        public string Message { get; set; }
+
+		public override string ToString()
         {
-            get
-            {
-                return facilityCode;
-            }
-
-            set
-            {
-                facilityCode = value;
-            }
-        }
-
-        [DataMember]
-        public int SeverityLevel
-        {
-            get
-            {
-                return severityLevel;
-            }
-
-            set
-            {
-                severityLevel = value;
-            }
-        }
-
-        [DataMember]
-        public int ProcessId
-        {
-            get
-            {
-                return processId;
-            }
-
-            set
-            {
-                processId = value;
-            }
-        }
-
-        [DataMember]
-        public string Timestamp
-        {
-            get
-            {
-                return timestamp;
-            }
-
-            set
-            {
-                timestamp = value;
-            }
-        }
-
-        [DataMember]
-        public string Hostname
-        {
-            get
-            {
-                return hostname;
-            }
-
-            set
-            {
-                hostname = value;
-            }
-        }
-
-        [DataMember]
-        public string Message
-        {
-            get
-            {
-                return message;
-            }
-
-            set
-            {
-                message = value;
-            }
-        }
-
-        public override string ToString()
-        {
-            string str = string.Format("{0} {1} {2} {3} {4} {5}", timestamp, facilityCode, severityLevel,
-                processId, hostname, message);
+            string str = string.Format("{0} {1} {2} {3} {4} {5}", Timestamp, FacilityCode, SeverityLevel,
+                ProcessId, Hostname, Message);
             return str;
         }
     }
