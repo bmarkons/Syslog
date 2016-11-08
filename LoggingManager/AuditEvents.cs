@@ -9,55 +9,55 @@ using System.Threading.Tasks;
 namespace LoggingManager
 {
 
-	public enum AuditEventTypes
-	{
-		UserAuthenticationSuccess = 0,
-		UserAuthorizationSuccess = 1,
-		UserAuthorizationFailed = 2
-	}
+    public enum AuditEventTypes
+    {
+        UserAuthenticationSuccess = 0,
+        UserAuthorizationSuccess = 1,
+        UserAuthorizationFailed = 2
+    }
 
-	public class AuditEvents
-	{
-		private static ResourceManager resourceManager = null;
-		private static object resourceLock = new object();
+    public class AuditEvents
+    {
+        private static ResourceManager resourceManager = null;
+        private static object resourceLock = new object();
 
-		private static ResourceManager ResourceMgr
-		{
-			get
-			{
-				lock (resourceLock)
-				{
-					if (resourceManager == null)
-					{
-						resourceManager = new ResourceManager(typeof(AuditEventsFile).FullName, Assembly.GetExecutingAssembly());
-					}
-					return resourceManager;
-				}
-			}
-		}
+        private static ResourceManager ResourceMgr
+        {
+            get
+            {
+                lock (resourceLock)
+                {
+                    if (resourceManager == null)
+                    {
+                        resourceManager = new ResourceManager(typeof(AuditEventsFile).FullName, Assembly.GetExecutingAssembly());
+                    }
+                    return resourceManager;
+                }
+            }
+        }
 
-		public static string UserAuthenticationSuccess
-		{
-			get
-			{
-				return ResourceMgr.GetString(AuditEventTypes.UserAuthenticationSuccess.ToString());
-			}
-		}
+        public static string UserAuthenticationSuccess
+        {
+            get
+            {
+                return ResourceMgr.GetString(AuditEventTypes.UserAuthenticationSuccess.ToString());
+            }
+        }
 
-		public static string UserAuthorizationSuccess
-		{
-			get
-			{
-				return ResourceMgr.GetString(AuditEventTypes.UserAuthorizationSuccess.ToString());
-			}
-		}
+        public static string UserAuthorizationSuccess
+        {
+            get
+            {
+                return ResourceMgr.GetString(AuditEventTypes.UserAuthorizationSuccess.ToString());
+            }
+        }
 
-		public static string UserAuthorizationFailed
-		{
-			get
-			{
-				return ResourceMgr.GetString(AuditEventTypes.UserAuthorizationFailed.ToString());
-			}
-		}
-	}
+        public static string UserAuthorizationFailed
+        {
+            get
+            {
+                return ResourceMgr.GetString(AuditEventTypes.UserAuthorizationFailed.ToString());
+            }
+        }
+    }
 }

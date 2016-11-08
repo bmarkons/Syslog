@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contracts;
+using System;
 using System.Diagnostics;
 
 namespace LoggingManager
@@ -53,7 +54,7 @@ namespace LoggingManager
         {
             string timestamp = DateTime.Now.ToString();
             
-            AddToLogList(4, 1, timestamp, Process.GetCurrentProcess().Id, Environment.MachineName, logMessage);
+            AddToLogList((int)FacilityKeyword.auth, 1, timestamp, Process.GetCurrentProcess().Id, Environment.MachineName, logMessage);
         }
 	}
 }

@@ -1,11 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Contracts
 {
+    public enum FacilityKeyword
+    {
+        kern = 0,
+        user = 1,
+        mail = 2,
+        deamon = 3,
+        auth = 4,
+        syslog = 5,
+        authpriv = 10
+        //add more if need
+    }
+
+    [DataContract]
     public class Log
     {
         private int facilityCode;
@@ -15,6 +29,7 @@ namespace Contracts
         private string hostname;
         private string message;
 
+        [DataMember]
         public int FacilityCode
         {
             get
@@ -28,6 +43,7 @@ namespace Contracts
             }
         }
 
+        [DataMember]
         public int SeverityLevel
         {
             get
@@ -41,6 +57,7 @@ namespace Contracts
             }
         }
 
+        [DataMember]
         public int ProcessId
         {
             get
@@ -54,6 +71,7 @@ namespace Contracts
             }
         }
 
+        [DataMember]
         public string Timestamp
         {
             get
@@ -67,6 +85,7 @@ namespace Contracts
             }
         }
 
+        [DataMember]
         public string Hostname
         {
             get
@@ -80,6 +99,7 @@ namespace Contracts
             }
         }
 
+        [DataMember]
         public string Message
         {
             get
@@ -95,7 +115,7 @@ namespace Contracts
 
         public override string ToString()
         {
-            string str = string.Format("{0} {1} {2} {3} {4} {5}", timestamp, facilityCode, severityLevel, 
+            string str = string.Format("{0} {1} {2} {3} {4} {5}", timestamp, facilityCode, severityLevel,
                 processId, hostname, message);
             return str;
         }

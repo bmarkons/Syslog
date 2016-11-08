@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contracts;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
@@ -59,7 +60,7 @@ namespace LoggingManager
                 newLog.AppendChild(newMessage);
 
                 doc.Save(logFileName);
-                AddToLogList(4, 1, timestamp, Process.GetCurrentProcess().Id, Environment.MachineName, logMessage);
+                AddToLogList((int)FacilityKeyword.auth, 1, timestamp, Process.GetCurrentProcess().Id, Environment.MachineName, logMessage);
             }
         }
     }

@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.ServiceModel;
 
 namespace LoggingManager
 {
@@ -9,6 +11,30 @@ namespace LoggingManager
     {
         private List<Log> logList = new List<Log>();
         private object locker = new object();
+
+        public Logger()
+        {
+            Thread thread = new Thread(new ThreadStart(WaitAndSend));
+            thread.Start();
+        }
+
+        private void WaitAndSend()
+        {
+            while (true)
+            {
+                if (logList.Count != 0)
+                {
+                    string address = "net.tcp://localhost:514/SyslogService";
+                    NetTcpBinding binding = new NetTcpBinding();
+                    using (SyslogProxy proxy = new SyslogProxy(binding, new EndpointAddress(new Uri(address))))
+                    {
+                        proxy.SendAll(logList);
+                        logList.Clear();
+                    }
+                }
+                Thread.Sleep(3000);
+            }
+        }
 
         public abstract void AuthorizationSuccess(string userName, string serviceName);
 
@@ -21,10 +47,10 @@ namespace LoggingManager
         /// /
         /// </summary>
         /// <param name="facCode">Facility code</param>
-        /// <param name="sevLvl"></param>
-        /// <param name="timestamp"></param>
-        /// <param name="procId"></param>
-        /// <param name=""></param>
+        /// <param name="sevLvl">Severity Level</param>
+        /// <param name="timestamp">Timestamp</param>
+        /// <param name="procId">Process id</param>
+        /// <param name="msg">Message</param>
         protected void AddToLogList(int facCode, int sevLvl, string timestamp, int procId, string host, string msg)
         {
             lock (locker)

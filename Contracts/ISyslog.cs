@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Contracts
 {
-    interface ILog
+    [ServiceContract]
+    public interface ISyslog
     {
+        [OperationContract]
+        void SendAll(List<Log> logList);
     }
 }

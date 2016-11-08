@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{9B9A71CA-DEEE-418F-ABFD-FE7112090D6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyslogService", "SyslogService\SyslogService.csproj", "{29FDB04D-529E-4A2F-8F74-8D41F8DD59F1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "User\User.csproj", "{780E4764-29E8-4FC8-B0B5-F276EF15EA05}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFComponent", "WCFComponent\WCFComponent.csproj", "{286E3A02-5BB6-4A12-81FE-95631DE5EC51}"
@@ -14,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingManager", "LoggingManager\LoggingManager.csproj", "{4BC6CF17-7FA6-48FD-9B88-B46C4204A69C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Security\Security.csproj", "{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Syslog", "Syslog\Syslog.csproj", "{350EBFE8-8B65-4017-9782-14509EC75643}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,6 @@ Global
 		{9B9A71CA-DEEE-418F-ABFD-FE7112090D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B9A71CA-DEEE-418F-ABFD-FE7112090D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B9A71CA-DEEE-418F-ABFD-FE7112090D6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29FDB04D-529E-4A2F-8F74-8D41F8DD59F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29FDB04D-529E-4A2F-8F74-8D41F8DD59F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29FDB04D-529E-4A2F-8F74-8D41F8DD59F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29FDB04D-529E-4A2F-8F74-8D41F8DD59F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{780E4764-29E8-4FC8-B0B5-F276EF15EA05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{780E4764-29E8-4FC8-B0B5-F276EF15EA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{780E4764-29E8-4FC8-B0B5-F276EF15EA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1B3BFC2-3B1A-4F84-B0C3-E989A8DA7F03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{350EBFE8-8B65-4017-9782-14509EC75643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{350EBFE8-8B65-4017-9782-14509EC75643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{350EBFE8-8B65-4017-9782-14509EC75643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{350EBFE8-8B65-4017-9782-14509EC75643}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
