@@ -12,5 +12,5 @@ namespace Contracts
     {
         [OperationContract]
         void SendAll(List<Log> logList);
-    }
+	}
 }
