@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
+using CertificateManager;
 
 namespace User
 {
@@ -21,7 +23,13 @@ namespace User
 			if (port != 0)
 			{
 				string address = String.Format(template, port);
-				using (UserProxy proxy = new UserProxy(binding, new EndpointAddress(new Uri(address))))
+				//X509Certificate2 srvCert = CertificateManagerClass.GetCertificateFromFile("WCFComponent.cer");
+				////3. korak sa table
+				//binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+				//EndpointAddress endpoint = new EndpointAddress(new Uri(address),
+				//											  new X509CertificateEndpointIdentity(srvCert));
+				EndpointAddress endpoint = new EndpointAddress(new Uri(address));
+				using (UserProxy proxy = new UserProxy(binding, endpoint))
 				{
 					proxy.Payment1();
 					proxy.Payment2();
