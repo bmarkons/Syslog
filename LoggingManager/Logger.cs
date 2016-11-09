@@ -2,8 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.ServiceModel;
+using CertificateManager;
 
 namespace LoggingManager
 {
@@ -11,12 +13,22 @@ namespace LoggingManager
     {
         private List<Log> logList = new List<Log>();
         private object locker = new object();
+		private NetTcpBinding binding;
+	    private EndpointAddress address;
 
-        public Logger()
+		public Logger()
         {
             Thread thread = new Thread(new ThreadStart(WaitAndSend));
             thread.Start();
-        }
+
+			binding = new NetTcpBinding();
+
+			X509Certificate2 srvCert = CertificateManagerClass.GetCertificateFromFile("SyslogService.cer");
+			//3. korak sa table
+			binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+			address = new EndpointAddress(new Uri("net.tcp://localhost:514/SyslogService"),
+										  new X509CertificateEndpointIdentity(srvCert));
+		}
 
         private void WaitAndSend()
         {
@@ -24,9 +36,7 @@ namespace LoggingManager
             {
                 if (logList.Count != 0)
                 {
-                    string address = "net.tcp://localhost:514/SyslogService";
-                    NetTcpBinding binding = new NetTcpBinding();
-                    using (SyslogProxy proxy = new SyslogProxy(binding, new EndpointAddress(new Uri(address))))
+                    using (SyslogProxy proxy = new SyslogProxy(binding, address))
                     {
                         proxy.SendAll(logList);
                         logList.Clear();

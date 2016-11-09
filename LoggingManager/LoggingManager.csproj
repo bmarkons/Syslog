@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,6 +63,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CertificateManager\CertificateManager.csproj">
+      <Project>{D8374197-E22D-4C6E-93E8-43E9586015BF}</Project>
+      <Name>CertificateManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Contracts\Contracts.csproj">
       <Project>{9b9a71ca-deee-418f-abfd-fe7112090d6b}</Project>
       <Name>Contracts</Name>

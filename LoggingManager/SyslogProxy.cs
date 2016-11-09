@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
+using CertificateManager;
 using Contracts;
+using System.ServiceModel.Security;
 
 namespace LoggingManager
 {
@@ -14,7 +17,13 @@ namespace LoggingManager
 
         public SyslogProxy(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
-            factory = this.CreateChannel();
+			//4. korak
+			this.Credentials.ClientCertificate.Certificate = CertificateManagerClass.GetCertificateFromFile("WCFComponent.pfx","ftn");
+			//5. korak
+			this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
+			this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
+
+			factory = this.CreateChannel();
         }
 
         public void SendAll(List<Log> logList)
