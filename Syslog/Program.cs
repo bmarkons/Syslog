@@ -23,7 +23,6 @@ namespace Syslog
 			if (PORT == 514)
 			{
 				string backupAddress = string.Format(template, BACKUP);
-
 				ReplicatorClient.CreateChannel(backupAddress);
 			}
 			ServiceHost host = new ServiceHost(typeof(SyslogService));
