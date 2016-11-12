@@ -18,10 +18,10 @@ namespace User
         public UserProxy(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
 			////4. korak
-			//this.Credentials.ClientCertificate.Certificate = CertificateManagerClass.GetCertificateFromFile("WCFClient.pfx","ftn");
+			this.Credentials.ClientCertificate.Certificate = CertificateManagerClass.GetCertificateFromFile("WCFClientWrongGroup.pfx","ftn");
 			////5. korak
-			//this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
-			//this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
+			this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
+			this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
 			factory = this.CreateChannel();
         }
 
@@ -30,6 +30,7 @@ namespace User
             bool success = false;
             try
             {
+                var v = this.State;
                 success = factory.Payment1();
             }
 			catch (Exception ex)

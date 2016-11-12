@@ -50,7 +50,7 @@ namespace Security
         {
             string value = ResourceManager.GetString(rolename);
 
-            string[] prms = value?.Split(',');
+            string[] prms = value.Split(',');
             return prms;
         }
 

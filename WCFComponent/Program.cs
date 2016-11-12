@@ -37,15 +37,15 @@ namespace WCFComponent
 			ServiceHost host3 = new ServiceHost(typeof(WCFComponentService));
 
 			//3. korak sa table
-			//binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+			binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 
 			host1.AddServiceEndpoint(typeof(IPayments), binding, address1);
 			host2.AddServiceEndpoint(typeof(IPayments), binding, address2);
 			host3.AddServiceEndpoint(typeof(IPayments), binding, address3);
 
-			host1.Authorization.ServiceAuthorizationManager = new CustomAuthorizationManager(textLogger);
-			host2.Authorization.ServiceAuthorizationManager = new CustomAuthorizationManager(windowsEventLogger);
-			host3.Authorization.ServiceAuthorizationManager = new CustomAuthorizationManager(xmlLogger);
+			//host1.Authorization.ServiceAuthorizationManager = new CustomAuthorizationManager(textLogger);
+			//host2.Authorization.ServiceAuthorizationManager = new CustomAuthorizationManager(windowsEventLogger);
+			//host3.Authorization.ServiceAuthorizationManager = new CustomAuthorizationManager(xmlLogger);
 
 			SetupSecurity(host1, textLogger);
 			SetupSecurity(host2, windowsEventLogger);
@@ -80,18 +80,19 @@ namespace WCFComponent
 
 		}
 
-		private static void SetupSecurity(ServiceHost host, Logger textLogger)
+		private static void SetupSecurity(ServiceHost host, Logger logger)
 		{
 			List<IAuthorizationPolicy> policies = new List<IAuthorizationPolicy>();
-			policies.Add(new CustomAuthorizationPolicy(textLogger));
+            policies.Add(new CustomAuthorizationPolicy(logger));
 			host.Authorization.ExternalAuthorizationPolicies = policies.AsReadOnly();
-			host.Authorization.PrincipalPermissionMode = PrincipalPermissionMode.Custom;
+		    host.Authorization.PrincipalPermissionMode = PrincipalPermissionMode.Custom;
+            host.Authorization.ServiceAuthorizationManager = new CustomAuthorizationManager(logger);
 
 			////4. korak
-			//host.Credentials.ServiceCertificate.Certificate = CertificateManagerClass.GetCertificateFromFile("WCFComponent.pfx","ftn");
+			host.Credentials.ServiceCertificate.Certificate = CertificateManagerClass.GetCertificateFromFile("WCFComponent.pfx","ftn");
 			////5. korak
-			//host.Credentials.ClientCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
-			//host.Credentials.ClientCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
+			host.Credentials.ClientCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
+			host.Credentials.ClientCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
 		}
 	}
 }

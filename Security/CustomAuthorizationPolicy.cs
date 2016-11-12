@@ -37,7 +37,7 @@ namespace Security
 				return false;
 			}
 
-			evaluationContext.Properties["Principal"] = GetPrincipal(identities[0]);
+            evaluationContext.Properties["Principal"] = GetPrincipal(identities[0]);
 			return true;
 		}
 
@@ -45,13 +45,13 @@ namespace Security
 		{
 			lock (locker)
 			{
-				IPrincipal principal = null;
-				WindowsIdentity windowsIdentity = identity as WindowsIdentity;
+                CustomPrincipal principal = null;
 
-				if (windowsIdentity != null)
+                if (identity.AuthenticationType == "X509")
 				{
-					logger.AuthenticationSuccess(windowsIdentity.Name);
-					principal = new WindowsPrincipal(windowsIdentity);
+
+                    principal = new CustomPrincipal(identity);
+                    logger.AuthenticationSuccess(principal.Name);
 				}
 
 				return principal;

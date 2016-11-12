@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using LoggingManager;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Security
 {
@@ -22,12 +24,18 @@ namespace Security
 			//check and log
 			bool authorized = false;
 
-			IPrincipal principal = operationContext.ServiceSecurityContext.AuthorizationContext.Properties["Principal"] as IPrincipal;
+            //IIdentity identity = operationContext.ServiceSecurityContext.AuthorizationContext.Properties["MyIdentity"] as IIdentity;
+            //Type x509Type = identity.GetType();
+            //FieldInfo cerField = x509Type.GetField("certificate", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            //X509Certificate2 c = cerField.GetValue(identity) as X509Certificate2;
+
+            CustomPrincipal principal = operationContext.ServiceSecurityContext.AuthorizationContext.Properties["Principal"] as CustomPrincipal;
 
 			var serviceName = operationContext.IncomingMessageHeaders.Action;
 			if (principal != null)
 			{
-				var userName = principal.Identity.Name;
+				var userName = principal.Name;
 				authorized = principal.IsInRole("AccountUsers");
 
 				if (authorized == false)

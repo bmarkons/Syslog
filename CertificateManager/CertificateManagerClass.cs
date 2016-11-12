@@ -19,20 +19,21 @@ namespace CertificateManager
 
 
 
-			if (collection.Count != 0)
-			{
-				return collection[0];
-			}
-			else
-			{
-				return null;
-			}
+            foreach (X509Certificate2 c in collection)
+            {
+                if (c.SubjectName.Name.Equals(string.Format("CN={0}", subjectName)))
+                {
+                    return c;
+                }
+            }
+
+            return null;
 		}
 
 		public static X509Certificate2 GetCertificateFromFile(string certName, string pass)
 		{
 			string solutionPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-			string certPath = solutionPath + "\\CertificateManager\\Certificates\\" + certName;
+            string certPath = solutionPath + "\\CertificateManager\\Certificates\\" + certName;
 
 			X509Certificate2Collection collection = new X509Certificate2Collection();
 			collection.Import(certPath, pass, X509KeyStorageFlags.PersistKeySet);
@@ -51,7 +52,7 @@ namespace CertificateManager
 		{
 
 			string solutionPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
-			string certPath = solutionPath + "\\CertificateManager\\Certificates\\" + certName;
+            string certPath = solutionPath + "\\CertificateManager\\Certificates\\" + certName;
 
 			X509Certificate2Collection collection = new X509Certificate2Collection();
 			collection.Import(certPath);

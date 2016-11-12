@@ -14,6 +14,7 @@ namespace Syslog
         private static readonly Thread _thread;
         private static ISyslog _backupService;
         private static ChannelFactory<ISyslog> factory;
+        private static object locker = new object();
 
         public static List<Log> LogList { get; set; }
 
@@ -33,7 +34,7 @@ namespace Syslog
         {
             while (true)
             {
-                if (LogList.Count != 0 && IsConnected)
+                if (IsConnected && LogList.Count != 0 )
                 {
                     if (_backupService != null)
                     {
@@ -48,20 +49,26 @@ namespace Syslog
 
         internal static void CreateChannel(string backupAddress)
         {
-            ChannelFactory<ISyslog> factory = new ChannelFactory<ISyslog>(new NetTcpBinding(), backupAddress);
-            _backupService = factory.CreateChannel();
+            lock (locker)
+            {
+                factory = new ChannelFactory<ISyslog>(new NetTcpBinding(), backupAddress);
+                _backupService = factory.CreateChannel();
+            }
         }
 
         public static bool IsConnected
         {
             get
             {
-                if (factory == null)
+                lock (locker)
                 {
-                    return false;
-                }
+                    if (factory == null)
+                    {
+                        return false;
+                    }
 
-                return factory.State == CommunicationState.Opened;
+                    return factory.State == CommunicationState.Opened;
+                }
             }
         }
     }

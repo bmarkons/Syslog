@@ -7,51 +7,47 @@ using System.Threading.Tasks;
 
 namespace Security
 {
-    public class CustomPrincipal
+    public class CustomPrincipal:IPrincipal
     {
-        WindowsIdentity identity;
+        IIdentity identity;
         HashSet<string> groups = new HashSet<string>();
-        HashSet<string> permissions = new HashSet<string>();
+        public string Name { get; set; }
 
-        public CustomPrincipal(WindowsIdentity id)
+
+        public CustomPrincipal(IIdentity id)
             : base()
         {
             identity = id;
-
-            foreach (var group in identity.Groups)
+            string s = id.Name;
+            if (s.Contains("OU"))
             {
-                string groupName = GetGroupName(group);
-
-                string[] s = RolesConfig.GetValue(groupName);
-
-                if (s != null)
-                    permissions.UnionWith(s);
-
-                groups.Add(groupName);
+                var ind = s.IndexOf("OU");
+                string groupsPart = s.Substring(ind);
+                groupsPart = groupsPart.Substring(0, groupsPart.IndexOf(';'));
+                string groupsString = groupsPart.Split('=')[1];
+                groupsString = groupsString.Substring(1, groupsString.Length - 2);
+                var grupe = groupsString.Split('#');
+                groups.UnionWith(grupe);
             }
+
+            if (s.Contains("CN"))
+            {
+                int ind = s.IndexOf("CN");
+                int idx;
+                if(s.Contains(",")){
+                    idx = s.IndexOf(",");
+                }else{
+                    idx = s.IndexOf(" ");
+                }
+                Name = s.Substring(ind, idx).Split('=')[1];
+            }
+
         }
 
-        private string GetGroupName(IdentityReference group)
+
+        public bool IsInRole(string groupName)
         {
-            string fullname = group.Translate(typeof(SecurityIdentifier)).Translate(typeof(NTAccount)).Value;
-
-            if (fullname.Contains("\\"))
-            {
-                string[] splitName = fullname.Split('\\');
-                return splitName[1];
-            }
-            else if (fullname.Contains("@"))
-            {
-                string[] splitName = fullname.Split('@');
-                return splitName[0];
-            }
-
-            return fullname;
-        }
-
-        public bool IsInRole(string role)
-        {
-            return permissions.Contains(role);
+            return groups.Contains(groupName);
         }
 
         public IIdentity Identity
