@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.ServiceModel" />
@@ -54,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="backup1.config" />
+    <None Include="backup2.config" />
+    <None Include="main.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CertificateManager\CertificateManager.csproj">
