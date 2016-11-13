@@ -14,9 +14,9 @@ namespace Syslog
 
         public void SendAll(List<Log> logList)
         {
-            if (ReplicatorClient.IsConnected)
+            if (AppConfig.HAS_BACKUP)
             {
-                ReplicatorClient.LogList.AddRange(logList);
+                Replicator.Instance.EqueueLogs(logList);
             }
 
             using (StreamWriter file = new StreamWriter(FILENAME, true))
