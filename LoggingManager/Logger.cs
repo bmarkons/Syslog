@@ -23,7 +23,7 @@ namespace LoggingManager
 
 			binding = new NetTcpBinding();
 
-			X509Certificate2 srvCert = CertificateManagerClass.GetCertificateFromFile("SyslogService.cer");
+            X509Certificate2 srvCert = CertificateManager.CertificateManager.GetCertificateFromFile("SyslogService.cer");
 			//3. korak sa table
 			binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 			address = new EndpointAddress(new Uri("net.tcp://localhost:514/SyslogService"),
@@ -53,14 +53,7 @@ namespace LoggingManager
         public abstract void AuthorizationFailed(string userName, string serviceName, string reason);
 
         protected abstract void Log(string logMessage);
-        /// <summary>
-        /// /
-        /// </summary>
-        /// <param name="facCode">Facility code</param>
-        /// <param name="sevLvl">Severity Level</param>
-        /// <param name="timestamp">Timestamp</param>
-        /// <param name="procId">Process id</param>
-        /// <param name="msg">Message</param>
+
         protected void AddToLogList(int facCode, int sevLvl, string timestamp, int procId, string host, string msg)
         {
             lock (locker)

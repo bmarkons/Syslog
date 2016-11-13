@@ -8,28 +8,8 @@ using System.Threading.Tasks;
 
 namespace CertificateManager
 {
-	public class CertificateManagerClass
+	public class CertificateManager
 	{
-		public static X509Certificate2 GetCertificateFromStorage(StoreName storeName, StoreLocation storeLocation, string subjectName)
-		{
-			X509Store store = new X509Store(storeName, storeLocation);
-			store.Open(OpenFlags.ReadOnly);
-
-			X509Certificate2Collection collection = store.Certificates.Find(X509FindType.FindBySubjectName, subjectName, true);// daj mi sve validne sertifikate
-
-
-
-            foreach (X509Certificate2 c in collection)
-            {
-                if (c.SubjectName.Name.Equals(string.Format("CN={0}", subjectName)))
-                {
-                    return c;
-                }
-            }
-
-            return null;
-		}
-
 		public static X509Certificate2 GetCertificateFromFile(string certName, string pass)
 		{
 			string solutionPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));

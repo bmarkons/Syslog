@@ -17,18 +17,21 @@ namespace LoggingManager
         {
             string msg = String.Format(AuditEvents.UserAuthenticationSuccess, userName);
             Log(msg);
+            Console.WriteLine(msg);
         }
 
         public override void AuthorizationFailed(string userName, string serviceName, string reason)
         {
             string msg = String.Format(AuditEvents.UserAuthorizationFailed, userName, serviceName, reason);
             Log(msg);
+            Console.WriteLine(msg);
         }
 
         public override void AuthorizationSuccess(string userName, string serviceName)
         {
             string msg = String.Format(AuditEvents.UserAuthorizationSuccess, userName, serviceName);
             Log(msg);
+            Console.WriteLine(msg);
         }
 
         protected override void Log(string logMessage)

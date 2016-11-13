@@ -18,7 +18,7 @@ namespace LoggingManager
         public SyslogProxy(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
 			//4. korak
-			this.Credentials.ClientCertificate.Certificate = CertificateManagerClass.GetCertificateFromFile("WCFComponent.pfx","ftn");
+			this.Credentials.ClientCertificate.Certificate = CertificateManager.CertificateManager.GetCertificateFromFile("WCFComponent.pfx","ftn");
 			//5. korak
 			this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
 			this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;

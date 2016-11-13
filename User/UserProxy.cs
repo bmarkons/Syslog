@@ -17,12 +17,12 @@ namespace User
 
         public UserProxy(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
-			////4. korak
-			this.Credentials.ClientCertificate.Certificate = CertificateManagerClass.GetCertificateFromFile("WCFClientWrongGroup.pfx","ftn");
-			////5. korak
-			this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
-			this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
-			factory = this.CreateChannel();
+            ////4. korak
+            this.Credentials.ClientCertificate.Certificate = CertificateManager.CertificateManager.GetCertificateFromFile("WCFClient2.pfx", "ftn");
+            ////5. korak
+            this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
+            this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
+            factory = this.CreateChannel();
         }
 
         public bool Payment1()
@@ -33,7 +33,7 @@ namespace User
                 var v = this.State;
                 success = factory.Payment1();
             }
-			catch (Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Error occured while calling payment1: {0}.", ex.Message);
             }

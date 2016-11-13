@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace Security
 {
-    public class CustomPrincipal:IPrincipal
+    public class CustomPrincipal : IPrincipal
     {
         IIdentity identity;
         HashSet<string> groups = new HashSet<string>();
         public string Name { get; set; }
-
 
         public CustomPrincipal(IIdentity id)
             : base()
@@ -25,25 +24,33 @@ namespace Security
                 string groupsPart = s.Substring(ind);
                 groupsPart = groupsPart.Substring(0, groupsPart.IndexOf(';'));
                 string groupsString = groupsPart.Split('=')[1];
-                groupsString = groupsString.Substring(1, groupsString.Length - 2);
-                var grupe = groupsString.Split('#');
-                groups.UnionWith(grupe);
+                if (groupsString.Contains("#"))
+                {
+                    groupsString = groupsString.Substring(1, groupsString.Length - 2);
+                    var grupe = groupsString.Split('#');
+                    groups.UnionWith(grupe);
+                }
+                else
+                {
+                    groups.Add(groupsString);
+                }
             }
 
             if (s.Contains("CN"))
             {
                 int ind = s.IndexOf("CN");
                 int idx;
-                if(s.Contains(",")){
+                if (s.Contains(","))
+                {
                     idx = s.IndexOf(",");
-                }else{
+                }
+                else
+                {
                     idx = s.IndexOf(" ");
                 }
                 Name = s.Substring(ind, idx).Split('=')[1];
             }
-
         }
-
 
         public bool IsInRole(string groupName)
         {
