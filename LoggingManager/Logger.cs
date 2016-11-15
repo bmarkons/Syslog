@@ -30,6 +30,9 @@ namespace LoggingManager
                                           new X509CertificateEndpointIdentity(srvCert));
         }
 
+		/// <summary>
+		/// Loop where logger waiting to send logs to the syslog
+		/// </summary>
         private void WaitAndSend()
         {
             while (true)
@@ -57,7 +60,16 @@ namespace LoggingManager
 
         protected abstract void Log(string logMessage);
 
-        protected void AddToLogList(int facCode, int sevLvl, string timestamp, int procId, string host, string msg)
+		/// <summary>
+		/// Create Log object and add to the list of logs
+		/// </summary>
+		/// <param name="facCode">FacilityCode</param>
+		/// <param name="sevLvl">SeverityLevel</param>
+		/// <param name="timestamp">Timestamp</param>
+		/// <param name="procId">ProcessId</param>
+		/// <param name="host">Hostname</param>
+		/// <param name="msg">Message</param>
+		protected void AddToLogList(int facCode, int sevLvl, string timestamp, int procId, string host, string msg)
         {
             lock (locker)
             {

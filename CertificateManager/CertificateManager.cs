@@ -10,6 +10,12 @@ namespace CertificateManager
 {
 	public class CertificateManager
 	{
+		/// <summary>
+		/// Get certificate from file from SolutionPath\\CertificateManager\\Certificates\\ 
+		/// </summary>
+		/// <param name="certName">Name of file(.pfx)</param>
+		/// <param name="pass"></param>
+		/// <returns></returns>
 		public static X509Certificate2 GetCertificateFromFile(string certName, string pass)
 		{
 			string solutionPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory())));
@@ -27,7 +33,11 @@ namespace CertificateManager
 				return null;
 			}
 		}
-
+		/// <summary>
+		/// Get certificate from file from SolutionPath\\CertificateManager\\Certificates\\ 
+		/// </summary>
+		/// <param name="certName">Name of file(.cer)</param>
+		/// <returns></returns>
 		public static X509Certificate2 GetCertificateFromFile(string certName)
 		{
 

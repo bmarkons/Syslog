@@ -7,12 +7,15 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
+using System.Threading;
 using CertificateManager;
 
 namespace User
 {
 	class Program
 	{
+		private static readonly int TEST = 1000;
+
 		static void Main(string[] args)
 		{
 			NetTcpBinding binding = new NetTcpBinding();
@@ -31,15 +34,25 @@ namespace User
 				//EndpointAddress endpoint = new EndpointAddress(new Uri(address));
 				using (UserProxy proxy = new UserProxy(binding, endpoint))
 				{
-					proxy.Payment1();
-					proxy.Payment2();
+					for (int i = 0; i < TEST; i++)
+					{
+						proxy.Payment1();
+						proxy.Payment2();
+						Thread.Sleep(200);
+						Console.Clear();
+						float percent = (float) (i + 1)*100/TEST;
+						Console.WriteLine("Completed : {0:N2} %", percent);
+					}
 				}
 
 			}
             Console.ReadLine();
 
         }
-
+		/// <summary>
+		/// Show menu for choosing WCFComponent
+		/// </summary>
+		/// <returns>Port</returns>
         private static int GetPort()
 		{
 			do

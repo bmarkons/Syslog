@@ -3,8 +3,9 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
+using LoggingManager;
 
-namespace LoggingManager
+namespace WCFComponent
 {
     public class XMLLogger : Logger
     {
