@@ -11,6 +11,7 @@ namespace Syslog
     public class SyslogService : ISyslog
     {
         private static readonly string FILENAME = "syslogs.txt";
+        private static readonly object locker = new object();
 
         public void SendAll(List<Log> logList)
         {
@@ -19,11 +20,14 @@ namespace Syslog
                 Replicator.Instance.EqueueLogs(logList);
             }
 
-            using (StreamWriter file = new StreamWriter(FILENAME, true))
+            lock (locker)
             {
-                foreach (Log log in logList)
+                using (StreamWriter file = new StreamWriter(FILENAME, true))
                 {
-                    file.WriteLine(log.ToString());
+                    foreach (Log log in logList)
+                    {
+                        file.WriteLine(log.ToString());
+                    }
                 }
             }
 

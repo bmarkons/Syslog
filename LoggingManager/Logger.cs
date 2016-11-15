@@ -13,33 +13,36 @@ namespace LoggingManager
     {
         private List<Log> logList = new List<Log>();
         private object locker = new object();
-		private NetTcpBinding binding;
-	    private EndpointAddress address;
+        private NetTcpBinding binding;
+        private EndpointAddress address;
 
-		public Logger()
+        public Logger()
         {
             Thread thread = new Thread(new ThreadStart(WaitAndSend));
             thread.Start();
 
-			binding = new NetTcpBinding();
+            binding = new NetTcpBinding();
 
             X509Certificate2 srvCert = CertificateManager.CertificateManager.GetCertificateFromFile("SyslogService.cer");
-			//3. korak sa table
-			binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
-			address = new EndpointAddress(new Uri("net.tcp://localhost:514/SyslogService"),
-										  new X509CertificateEndpointIdentity(srvCert));
-		}
+            //3. korak sa table
+            binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+            address = new EndpointAddress(new Uri("net.tcp://localhost:514/SyslogService"),
+                                          new X509CertificateEndpointIdentity(srvCert));
+        }
 
         private void WaitAndSend()
         {
             while (true)
             {
-                if (logList.Count != 0)
+                lock (locker)
                 {
-                    using (SyslogProxy proxy = new SyslogProxy(binding, address))
+                    if (logList.Count != 0)
                     {
-                        proxy.SendAll(logList);
-                        logList.Clear();
+                        using (SyslogProxy proxy = new SyslogProxy(binding, address))
+                        {
+                            proxy.SendAll(logList);
+                            logList.Clear();
+                        }
                     }
                 }
                 Thread.Sleep(3000);
