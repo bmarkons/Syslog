@@ -1,20 +1,24 @@
-﻿using System;
+﻿using Contracts;
+using System;
 using System.Diagnostics;
-using System.IO;
+using LoggingManager;
 
-namespace LoggingManager
+namespace WCFComponent
 {
-    public class TextLogger : Logger
+    public class WindowsEventLogger : Logger
     {
-        private string logFileName;
-
-        public TextLogger(string logFileName)
-        {
-            this.logFileName = logFileName;
-        }
-
         public override void AuthenticationSuccess(string userName)
         {
+            try
+            {
+                Audit.AuthenticationSuccess(userName);
+
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine(e);
+            }
+
             string msg = String.Format(AuditEvents.UserAuthenticationSuccess, userName);
             Log(msg);
             Console.WriteLine(msg);
@@ -22,6 +26,14 @@ namespace LoggingManager
 
         public override void AuthorizationFailed(string userName, string serviceName, string reason)
         {
+            try
+            {
+                Audit.AuthorizationFailed(userName, serviceName, reason);
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine(e);
+            }
             string msg = String.Format(AuditEvents.UserAuthorizationFailed, userName, serviceName, reason);
             Log(msg);
             Console.WriteLine(msg);
@@ -29,6 +41,14 @@ namespace LoggingManager
 
         public override void AuthorizationSuccess(string userName, string serviceName)
         {
+            try
+            {
+                Audit.AuthorizationSuccess(userName, serviceName);
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine(e);
+            }
             string msg = String.Format(AuditEvents.UserAuthorizationSuccess, userName, serviceName);
             Log(msg);
             Console.WriteLine(msg);
@@ -38,12 +58,7 @@ namespace LoggingManager
         {
             string timestamp = DateTime.Now.ToString();
 
-            using (StreamWriter file = new StreamWriter(logFileName, true))
-            {
-                file.WriteLine(" " + timestamp + ": " + logMessage);
-            }
-
-            AddToLogList(4, 1, timestamp, Process.GetCurrentProcess().Id, Environment.MachineName, logMessage);
+            AddToLogList((int)FacilityKeyword.auth, 1, timestamp, Process.GetCurrentProcess().Id, Environment.MachineName, logMessage);
         }
     }
 }
