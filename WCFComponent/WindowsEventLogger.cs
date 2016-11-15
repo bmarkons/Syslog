@@ -7,19 +7,23 @@ namespace WCFComponent
 {
     public class WindowsEventLogger : Logger
     {
+        private static readonly object locker = new object();
+
         public override void AuthenticationSuccess(string userName)
         {
             try
             {
-                Audit.AuthenticationSuccess(userName);
-
+                lock (locker)
+                {
+                    Audit.AuthenticationSuccess(userName);
+                }
             }
             catch (Exception e)
             {
-                //Console.WriteLine(e);
+                Console.WriteLine(e);
             }
 
-            string msg = String.Format(AuditEvents.UserAuthenticationSuccess, userName);
+            string msg = string.Format(AuditEvents.UserAuthenticationSuccess, userName);
             Log(msg);
             Console.WriteLine(msg);
         }
@@ -28,7 +32,10 @@ namespace WCFComponent
         {
             try
             {
-                Audit.AuthorizationFailed(userName, serviceName, reason);
+                lock (locker)
+                {
+                    Audit.AuthorizationFailed(userName, serviceName, reason);
+                }
             }
             catch (Exception e)
             {
@@ -43,11 +50,14 @@ namespace WCFComponent
         {
             try
             {
-                Audit.AuthorizationSuccess(userName, serviceName);
+                lock (locker)
+                {
+                    Audit.AuthorizationSuccess(userName, serviceName);
+                }
             }
             catch (Exception e)
             {
-                //Console.WriteLine(e);
+                Console.WriteLine(e);
             }
             string msg = String.Format(AuditEvents.UserAuthorizationSuccess, userName, serviceName);
             Log(msg);

@@ -11,7 +11,7 @@ namespace WCFComponent
     {
         private XmlDocument doc = new XmlDocument();
         private string logFileName;
-        private object locker = new object();
+        private static readonly object locker = new object();
         public XMLLogger(string logFileName)
         {
             this.logFileName = logFileName;
@@ -41,7 +41,7 @@ namespace WCFComponent
 
         public override void AuthorizationSuccess(string userName, string serviceName)
         {
-            string msg = String.Format(AuditEvents.UserAuthorizationSuccess, userName, serviceName);
+            string msg = string.Format(AuditEvents.UserAuthorizationSuccess, userName, serviceName);
             Log(msg);
             Console.WriteLine(msg);
         }

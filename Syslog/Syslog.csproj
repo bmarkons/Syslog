@@ -55,9 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="backup1.config" />
-    <None Include="backup2.config" />
-    <None Include="main.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CertificateManager\CertificateManager.csproj">

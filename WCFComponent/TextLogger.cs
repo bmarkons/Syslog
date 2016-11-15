@@ -8,6 +8,7 @@ namespace WCFComponent
     public class TextLogger : Logger
     {
         private string logFileName;
+        private static readonly object locker = new object();
 
         public TextLogger(string logFileName)
         {
@@ -39,9 +40,12 @@ namespace WCFComponent
         {
             string timestamp = DateTime.Now.ToString();
 
-            using (StreamWriter file = new StreamWriter(logFileName, true))
+            lock (locker)
             {
-                file.WriteLine(" " + timestamp + ": " + logMessage);
+                using (StreamWriter file = new StreamWriter(logFileName, true))
+                {
+                    file.WriteLine(" " + timestamp + ": " + logMessage);
+                }
             }
 
             AddToLogList(4, 1, timestamp, Process.GetCurrentProcess().Id, Environment.MachineName, logMessage);
