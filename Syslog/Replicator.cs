@@ -9,13 +9,16 @@ using System.ServiceModel;
 
 namespace Syslog
 {
-    public class Replicator
+	/// <summary>
+	/// Intermediary between Main Syslog and Backup
+	/// </summary>
+	public class Replicator
     {
-        ISyslog backupProxy;
-        ChannelFactory<ISyslog> factory;
+        private ISyslog _backupProxy;
+        private ChannelFactory<ISyslog> _factory;
         private readonly object locker = new object();
-        private Thread replicator;
-        private Queue<Log> logQueue = new Queue<Log>(100);
+        private Thread _replicator;
+        private Queue<Log> _logQueue = new Queue<Log>(100); //buffer
         private static Replicator instance;
         public static Replicator Instance
         {
@@ -31,39 +34,46 @@ namespace Syslog
 
         public Replicator()
         {
-            factory = new ChannelFactory<ISyslog>(new NetTcpBinding(), string.Format("net.tcp://{0}:{1}/SyslogService", AppConfig.BACKUP_ADDRESS, AppConfig.BACKUP_PORT));
-            backupProxy = factory.CreateChannel();
-            replicator = new Thread(ReplicatePeriodically);
-            replicator.Start();
+            _factory = new ChannelFactory<ISyslog>(new NetTcpBinding(), string.Format("net.tcp://{0}:{1}/SyslogService", AppConfig.BACKUP_ADDRESS, AppConfig.BACKUP_PORT));
+            _backupProxy = _factory.CreateChannel();
+            _replicator = new Thread(ReplicatePeriodically);
+            _replicator.Start();
         }
 
+		/// <summary>
+		/// Wait for logs and replicate to the Backup server
+		/// </summary>
         private void ReplicatePeriodically()
         {
             while (true)
             {
                 Thread.Sleep(1000);
-                if (logQueue.Count != 0)
+                if (_logQueue.Count != 0)
                 {
                     Replicate();
                 }
             }
         }
 
+
+		/// <summary>
+		/// Trying to replicate logs from Queue. Create new channel, if channel is not created 
+		/// </summary>
         private void Replicate()
         {
             try
             {
                 lock (locker)
                 {
-                    backupProxy.SendAll(logQueue.ToList());
-                    Console.WriteLine("Replicated {0} logs on backup server.", logQueue.Count);
-                    logQueue.Clear();
+                    _backupProxy.SendAll(_logQueue.ToList());
+                    Console.WriteLine("Replicated {0} logs on backup server.", _logQueue.Count);
+                    _logQueue.Clear();
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine("Backup server not available : {0}.", e.GetType());
-                backupProxy = factory.CreateChannel();
+                _backupProxy = _factory.CreateChannel();
             }
         }
 
@@ -72,7 +82,7 @@ namespace Syslog
             lock (locker)
             {
                 foreach (Log log in logList)
-                    logQueue.Enqueue(log);
+                    _logQueue.Enqueue(log);
             }
         }
     }
